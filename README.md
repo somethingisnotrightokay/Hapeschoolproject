@@ -1,4 +1,3 @@
 # Hapeschoolproject
 To allow hosting of the website for my HAPE school project.
-
-Also to hold some more things related to the website
+It is hosted at: https://wynhealth-rover.pages.dev/
