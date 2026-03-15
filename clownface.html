@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You are this emoji.</title>
+  <style>
+    body { overflow: hidden; margin: 0; background: black; }
+    .emoji {
+      position: absolute;
+      font-size: 50px;
+      animation: flash 0.5s infinite alternate;
+    }
+    @keyframes flash { 0% { opacity: 1; } 100% { opacity: 0; } }
+    #msg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-align: center;
+      z-index: 100;
+      background: rgba(0,0,0,0.7);
+      padding: 20px 30px;
+      border-radius: 10px;
+      border: 2px solid #ff4500;
+    }
+    #msg a { color: #ff4500; text-decoration: none; display: block; margin-top: 12px; font-size: 0.9rem; }
+    #msg a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="msg">
+    you disagreed with a health program 🤡<br>
+    <span style="font-size:1rem;font-weight:normal;color:#ccc;">this is the result of your choices</span>
+    <a href="index.html">← go back and reconsider</a>
+  </div>
+  <script>
+    function createEmoji() {
+      const emoji = document.createElement('div');
+      emoji.className = 'emoji';
+      emoji.innerText = '🤡';
+      emoji.style.left = Math.random() * window.innerWidth + 'px';
+      emoji.style.top = Math.random() * window.innerHeight + 'px';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 3000);
+    }
+    setInterval(createEmoji, 200);
+  </script>
+</body>
+</html>
