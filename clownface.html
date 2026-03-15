@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You are this emoji.</title>
+  <style>
+    body { overflow: hidden; margin: 0; background: black; }
+    .emoji { position: absolute; font-size: 50px; animation: flash 0.5s infinite alternate; }
+    @keyframes flash { 0% { opacity: 1; } 100% { opacity: 0; } }
+    #msg {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: white; font-family: Arial, sans-serif;
+      font-size: 1.3rem; font-weight: bold;
+      text-align: center; z-index: 100;
+      background: rgba(0,0,0,0.75);
+      padding: 22px 30px; border-radius: 10px;
+      border: 2px solid #ff4500;
+    }
+    #msg span { font-size: 0.95rem; font-weight: normal; color: #ccc; display: block; margin-top: 6px; }
+    #msg a { color: #ff4500; text-decoration: none; display: block; margin-top: 14px; font-size: 0.88rem; }
+    #msg a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="msg">
+    you disagreed with a health program 🤡
+    <span>this is the direct result of your choices</span>
+    <a href="index.html">← go back and reconsider your life</a>
+  </div>
+  <script>
+    function spawnClown() {
+      const e = document.createElement('div');
+      e.className = 'emoji';
+      e.textContent = '🤡';
+      e.style.left = Math.random() * window.innerWidth + 'px';
+      e.style.top = Math.random() * window.innerHeight + 'px';
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 3000);
+    }
+    setInterval(spawnClown, 200);
+  </script>
+</body>
+</html>
