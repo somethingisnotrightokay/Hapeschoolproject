@@ -1,995 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WynHealth Rover</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: #0f0f0f;
-    color: #f0f0f0;
-    font-family: 'Nunito', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2.5rem;
-    background: rgba(15,15,15,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid #2a2a2a;
-  }
-  .nav-logo {
-    font-family: 'Space Mono', monospace;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #f0f0f0;
-    text-decoration: none;
-  }
-  .nav-logo span { color: #00e5a0; }
-  nav ul { display: flex; gap: 2rem; list-style: none; }
-  nav ul a {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #888;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  nav ul a:hover { color: #00e5a0; }
-
-  /* SECTIONS */
-  section { padding: 5rem 2.5rem; }
-
-  .tag {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #00e5a0;
-    background: rgba(0,229,160,0.08);
-    border: 1px solid rgba(0,229,160,0.2);
-    padding: 0.3rem 0.8rem;
-    border-radius: 99px;
-    margin-bottom: 1.2rem;
-  }
-
-  h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-  }
-  h2 .u {
-    border-bottom: 3px solid #00e5a0;
-    padding-bottom: 2px;
-  }
-
-  .sub {
-    color: #888;
-    font-size: 0.95rem;
-    max-width: 540px;
-    margin-bottom: 3rem;
-    line-height: 1.8;
-  }
-
-  /* HERO */
-  #hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 7rem 2.5rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .dots {
-    position: absolute; inset: 0;
-    background-image: radial-gradient(circle, rgba(0,229,160,0.07) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
-  }
-  .glow {
-    position: absolute;
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,229,160,0.1) 0%, transparent 70%);
-    top: -100px; right: -100px;
-    pointer-events: none;
-  }
-  .hero-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    color: #00e5a0;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-  .hero-title {
-    font-size: clamp(3.5rem, 9vw, 7.5rem);
-    font-weight: 900;
-    line-height: 0.95;
-    margin-bottom: 1.5rem;
-  }
-  .hero-title .green { color: #00e5a0; }
-  .hero-title .yellow { color: #ffe156; }
-  .hero-desc {
-    font-size: 1.05rem;
-    color: #aaa;
-    max-width: 500px;
-    margin-bottom: 2.5rem;
-    line-height: 1.8;
-  }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 0.9rem 1.8rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.2s, color 0.2s, border-color 0.2s;
-  }
-  .btn-green { background: #00e5a0; color: #000; }
-  .btn-green:hover { background: #fff; transform: translateY(-2px); }
-  .btn-ghost { border: 1px solid #2a2a2a; color: #888; }
-  .btn-ghost:hover { border-color: #00e5a0; color: #00e5a0; }
-
-  /* STATS */
-  #stats {
-    background: #1a1a1a;
-    border-top: 1px solid #2a2a2a;
-    border-bottom: 1px solid #2a2a2a;
-    padding: 3.5rem 2.5rem;
-  }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.2rem;
-  }
-  .stat-box {
-    background: #0f0f0f;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 1.8rem 1.5rem;
-    text-align: center;
-  }
-  .stat-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: #00e5a0;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-  .stat-label { font-size: 0.78rem; color: #888; line-height: 1.5; }
-
-  /* WHY WYNDHAM */
-  #why { background: #0f0f0f; }
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-  .why-cards { display: flex; flex-direction: column; gap: 1rem; }
-  .why-card {
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-  .why-card-top { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 0.4rem; }
-  .why-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #00e5a0;
-  }
-  .why-title { font-weight: 700; font-size: 0.9rem; }
-  .why-text { font-size: 0.82rem; color: #888; line-height: 1.6; }
-
-  .quote-box {
-    background: #1a1a1a;
-    border-left: 3px solid #00e5a0;
-    border-radius: 0 12px 12px 0;
-    padding: 1.5rem;
-    margin-top: 2rem;
-  }
-  .quote-box p { font-size: 0.88rem; color: #aaa; line-height: 1.7; font-style: italic; margin-bottom: 0.8rem; }
-  .quote-box cite { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #00e5a0; }
-
-  /* COMPARISON */
-  #different {
-    background: #1a1a1a;
-    border-top: 1px solid #2a2a2a;
-    border-bottom: 1px solid #2a2a2a;
-  }
-  .compare-table { width: 100%; border-collapse: collapse; margin-top: 2.5rem; font-size: 0.85rem; }
-  .compare-table th {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #888;
-    padding: 0.8rem 1.2rem;
-    text-align: left;
-    border-bottom: 1px solid #2a2a2a;
-    font-weight: 700;
-  }
-  .compare-table th.hl { color: #00e5a0; }
-  .compare-table td {
-    padding: 1rem 1.2rem;
-    border-bottom: 1px solid #2a2a2a;
-    color: #555;
-    line-height: 1.5;
-    vertical-align: top;
-  }
-  .compare-table td.row-label { font-weight: 700; color: #f0f0f0; font-size: 0.82rem; white-space: nowrap; }
-  .compare-table td.rover { color: #f0f0f0; background: rgba(0,229,160,0.04); border-left: 2px solid rgba(0,229,160,0.3); }
-  .compare-table tr:last-child td { border-bottom: none; }
-  .y { color: #00e5a0; font-weight: 700; }
-  .n { color: #333; }
-
-  /* MEET THE ROVER */
-  #rover { background: #0f0f0f; }
-  .rover-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-  .rover-visual {
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 16px;
-    padding: 2.5rem;
-    text-align: center;
-  }
-  .rover-visual .big { font-size: 5rem; margin-bottom: 1rem; display: block; }
-  .rover-visual .mini-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    color: #00e5a0;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-  }
-  .rover-visual strong { font-size: 1.2rem; display: block; margin-bottom: 1.5rem; }
-  .rover-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
-  .rover-tags span {
-    background: rgba(0,229,160,0.08);
-    border: 1px solid rgba(0,229,160,0.2);
-    color: #00e5a0;
-    font-size: 0.72rem;
-    padding: 0.3rem 0.8rem;
-    border-radius: 99px;
-    font-weight: 600;
-  }
-  .rover-features { display: flex; flex-direction: column; gap: 1rem; }
-  .rover-feature {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 1.2rem;
-  }
-  .rover-feature .icon { font-size: 1.5rem; flex-shrink: 0; }
-  .rover-feature strong { display: block; font-size: 0.9rem; margin-bottom: 0.2rem; }
-  .rover-feature p { font-size: 0.8rem; color: #888; line-height: 1.5; }
-
-  /* PILLARS */
-  #program {
-    background: #1a1a1a;
-    border-top: 1px solid #2a2a2a;
-    border-bottom: 1px solid #2a2a2a;
-  }
-  .pillars-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.2rem;
-  }
-  .pillar-card {
-    background: #0f0f0f;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 2rem;
-  }
-  .pillar-card .emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
-  .pillar-card h3 { font-weight: 800; font-size: 1.05rem; margin-bottom: 0.6rem; }
-  .pillar-card p { font-size: 0.82rem; color: #888; line-height: 1.6; margin-bottom: 1.2rem; }
-  .pillar-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-  .pillar-card ul li {
-    font-size: 0.78rem; color: #555;
-    display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.4;
-  }
-  .pillar-card ul li::before { content: '→'; color: #00e5a0; flex-shrink: 0; }
-
-  .takeaway-bar {
-    margin-top: 3rem;
-    background: #0f0f0f;
-    border: 1px solid rgba(0,229,160,0.2);
-    border-radius: 12px;
-    padding: 1.8rem 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-  .takeaway-item { display: flex; gap: 0.8rem; align-items: flex-start; }
-  .takeaway-item .t-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
-  .takeaway-item p { font-size: 0.82rem; color: #aaa; line-height: 1.5; }
-  .takeaway-item p strong { color: #f0f0f0; display: block; margin-bottom: 0.2rem; font-size: 0.88rem; }
-
-  /* SESSION FLOW */
-  #session { background: #0f0f0f; }
-  .flow-steps { display: flex; flex-direction: column; margin-top: 2rem; max-width: 680px; }
-  .flow-item { display: flex; gap: 1.5rem; align-items: stretch; }
-  .flow-left { display: flex; flex-direction: column; align-items: center; width: 2rem; flex-shrink: 0; }
-  .flow-circle {
-    width: 2rem; height: 2rem; border-radius: 50%;
-    background: #00e5a0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; font-weight: 700; color: #000; flex-shrink: 0;
-  }
-  .flow-line { width: 2px; flex: 1; background: #2a2a2a; margin: 4px 0; min-height: 16px; }
-  .flow-item:last-child .flow-line { display: none; }
-  .flow-content {
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 0.8rem;
-    flex: 1;
-  }
-  .flow-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.3rem; }
-  .flow-time {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem; color: #00e5a0;
-    background: rgba(0,229,160,0.08);
-    border: 1px solid rgba(0,229,160,0.15);
-    padding: 0.2rem 0.6rem; border-radius: 99px;
-  }
-  .flow-top strong { font-size: 0.9rem; }
-  .flow-content p { font-size: 0.8rem; color: #888; line-height: 1.5; margin-top: 0.3rem; }
-  .flow-why {
-    margin-top: 0.6rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: #333;
-    letter-spacing: 0.05em;
-  }
-  .flow-why span { color: #00e5a0; }
-
-  /* OUTCOMES */
-  #outcomes {
-    background: #1a1a1a;
-    border-top: 1px solid #2a2a2a;
-    border-bottom: 1px solid #2a2a2a;
-  }
-  .outcomes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.2rem;
-  }
-  .outcome-card {
-    background: #0f0f0f;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 1.8rem;
-  }
-  .outcome-card .icon { font-size: 1.4rem; margin-bottom: 0.8rem; display: block; }
-  .outcome-card h4 {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem; color: #00e5a0;
-    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;
-  }
-  .outcome-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-  .outcome-card ul li {
-    font-size: 0.8rem; color: #555;
-    display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.4;
-  }
-  .outcome-card ul li::before { content: '—'; color: #00e5a0; flex-shrink: 0; }
-
-  /* FOUNDER */
-  #founder { background: #0f0f0f; }
-  .founder-box {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 3rem;
-    align-items: center;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 16px;
-    padding: 3rem;
-    max-width: 800px;
-  }
-  .founder-avatar {
-    width: 110px; height: 110px; border-radius: 50%;
-    background: #202020; border: 2px solid #00e5a0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 2.2rem; font-weight: 700; color: #00e5a0;
-  }
-  .founder-box h3 { font-size: 2rem; font-weight: 900; margin-bottom: 0.2rem; }
-  .founder-role {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem; letter-spacing: 0.12em;
-    color: #00e5a0; text-transform: uppercase; margin-bottom: 1rem;
-  }
-  .founder-box p { font-size: 0.88rem; color: #777; line-height: 1.8; }
-
-  /* PARTNERS */
-  #partners {
-    background: #1a1a1a;
-    border-top: 1px solid #2a2a2a;
-  }
-  .partners-wrap { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
-  .partner-pill {
-    border: 1px solid #2a2a2a;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    font-size: 0.78rem;
-    color: #888;
-    font-weight: 600;
-    background: #0f0f0f;
-  }
-
-  /* FOOTER */
-  footer {
-    background: #0f0f0f;
-    border-top: 1px solid #2a2a2a;
-    padding: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .footer-logo { font-family: 'Space Mono', monospace; font-size: 1rem; font-weight: 700; }
-  .footer-logo span { color: #00e5a0; }
-  footer p { font-size: 0.75rem; color: #333; }
-
-  /* FADE IN */
-  .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .fade.show { opacity: 1; transform: translateY(0); }
-
-  @media (max-width: 700px) {
-    nav { padding: 1rem 1.5rem; }
-    nav ul { display: none; }
-    section { padding: 3.5rem 1.5rem; }
-    #hero { padding: 6rem 1.5rem 3rem; }
-    .two-col, .rover-layout { grid-template-columns: 1fr; }
-    .founder-box { grid-template-columns: 1fr; }
-    .compare-table { font-size: 0.75rem; }
-    .compare-table th, .compare-table td { padding: 0.6rem 0.8rem; }
-    footer { flex-direction: column; text-align: center; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WynHealth Rover</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-  <a href="#hero" class="nav-logo">Wyn<span>Health</span> Rover</a>
-  <ul>
-    <li><a href="#why">Why Wyndham</a></li>
-    <li><a href="#rover">The Rover</a></li>
-    <li><a href="#program">Program</a></li>
-    <li><a href="#session">Sessions</a></li>
-    <li><a href="#outcomes">Outcomes</a></li>
-    <li><a href="#founder">Founder</a></li>
-  </ul>
-</nav>
+<nav id="main-nav"></nav>
+<div id="clown-overlay"></div>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="dots"></div>
-  <div class="glow"></div>
-  <div class="hero-eyebrow">🚐 Wyndham · Victoria · 2025</div>
-  <h1 class="hero-title">
-    WYN<span class="green">HEALTH</span><br>
-    <span class="yellow">ROVER</span>
-  </h1>
-  <p class="hero-desc">
-    A mobile health program that comes <em>to you</em> — bringing movement,
-    nutrition, and mental health skills directly into Wyndham's communities.
-    It's free. It's practical. And it goes where clinics don't.
-  </p>
-  <div class="hero-btns">
-    <a href="#program" class="btn btn-green">See the Program →</a>
-    <a href="#why" class="btn btn-ghost">Why Wyndham?</a>
+<section class="hero">
+  <div class="container">
+    <div style="font-size:0.9rem;color:#ff4500;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🚐 Community Health Project · Wyndham, Victoria · 2025</div>
+    <h1>WYNHEALTH ROVER</h1>
+    <div class="tagline">A mobile health program built for young people in Wyndham.</div>
+    <p>Free. Comes to you. Covers movement, food, sleep, stress, screens and more — all in 35 minutes. No appointments, no fees, no excuses.</p>
+    <div class="hero-btns">
+      <a href="program.html" class="btn">See the Program →</a>
+      <a href="guidelines.html" class="btn btn-outline">Guidelines &amp; Barriers</a>
+    </div>
+    <div class="join-btn-wrap">
+      <span class="join-arrows">&#9658;&#9658;&#9658;</span>
+      <a href="join.html" class="btn-join">Join the Program</a>
+      <span class="join-arrows">&#9668;&#9668;&#9668;</span>
+    </div>
+    <p style="color:#999;font-size:0.85rem;margin-top:4px;">(scroll down first. there's actual content here.)</p>
   </div>
 </section>
 
 <!-- STATS -->
-<div id="stats">
-  <div class="stats-grid">
-    <div class="stat-box fade">
-      <div class="stat-num" data-target="270000">0</div>
-      <div class="stat-label">Wyndham residents — one of Australia's fastest-growing areas</div>
-    </div>
-    <div class="stat-box fade">
-      <div class="stat-num" data-target="6">0</div>
-      <div class="stat-label">Modifiable health behaviours targeted every single session</div>
-    </div>
-    <div class="stat-box fade">
-      <div class="stat-num" data-target="35">0</div>
-      <div class="stat-label">Minutes per session. Short, structured, and effective</div>
-    </div>
-    <div class="stat-box fade">
-      <div class="stat-num" data-target="50">0</div>
-      <div class="stat-label">Community programs in Wyndham — almost none target youth specifically</div>
-    </div>
-    <div class="stat-box fade">
-      <div class="stat-num" data-target="100">0</div>
-      <div class="stat-label">% free to access. No fees, no referral, no barriers</div>
+<div id="stats" style="background:#16213e;padding:40px 20px;border-top:2px solid #ff4500;border-bottom:2px solid rgba(255,69,0,0.3);">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-box fade">
+        <div class="stat-num" data-target="270000">0</div>
+        <div class="stat-label">Wyndham residents — one of Australia's fastest-growing areas</div>
+      </div>
+      <div class="stat-box fade">
+        <div class="stat-num" data-target="6">0</div>
+        <div class="stat-label">health topics covered every session — movement, food, sleep, stress, screens + more</div>
+      </div>
+      <div class="stat-box fade">
+        <div class="stat-num" data-target="35">0</div>
+        <div class="stat-label">minutes per session — shorter than your teacher's morning briefing</div>
+      </div>
+      <div class="stat-box fade">
+        <div class="stat-num" data-target="50">0</div>
+        <div class="stat-label">community programs in Wyndham — almost none are built for young people</div>
+      </div>
+      <div class="stat-box fade">
+        <div class="stat-num" data-target="100" data-post="%">0</div>
+        <div class="stat-label">free — no fees, no booking, just show up</div>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- THE HEALTH ISSUE -->
+<section>
+  <div class="container">
+    <h2>The <span>Health Issue</span></h2>
+    <p class="section-sub">This isn't made up. These are real, documented problems affecting real young people in Wyndham specifically.</p>
+    <div class="grid-2">
+      <div>
+        <p style="color:#ccc;line-height:1.9;font-size:0.97rem;margin-bottom:14px;">
+          Young people in Wyndham face a combination of health challenges that are well-documented but
+          poorly addressed by existing services. Low physical activity, poor nutrition habits,
+          and increasing rates of stress and anxiety are consistently identified in national and local health data —
+          yet almost all the community programs are built for adults, seniors, or families.
+        </p>
+        <p style="color:#ccc;line-height:1.9;font-size:0.97rem;margin-bottom:14px;">
+          Wyndham's own Municipal Public Health and Wellbeing Plan (2021–2025) acknowledges this gap.
+          The 2024–2026 Community Health and Wellbeing Report specifically calls out the lack of
+          youth-focused mental health programs outside of schools.
+        </p>
+        <p style="color:#ccc;line-height:1.9;font-size:0.97rem;">
+          The problem isn't just a shortage of programs — it's a shortage of programs that are
+          free, mobile, culturally accessible, and actually relevant to young people's lives.
+        </p>
+        <div class="quote-box fade" style="margin-top:20px;">
+          <p>"There is less visibility of youth-specific mental health initiatives outside of school settings. Expanding peer support for young people could address this gap."</p>
+          <cite>— Wyndham Community Health &amp; Wellbeing Report, 2024–2026</cite>
+        </div>
+      </div>
+      <div>
+        <div class="card fade">
+          <h3>🏃 Low Physical Activity</h3>
+          <p>Only 1 in 5 Australian teens meets the recommended 60 minutes of moderate-vigorous activity per day. Sedentary time has gone up significantly since 2020.</p>
+        </div>
+        <div class="card fade">
+          <h3>🍔 Poor Nutrition Habits</h3>
+          <p>Most Australian teenagers consume well above the recommended daily intake of added sugar, and fall short on fruit, vegetables, and fibre.</p>
+        </div>
+        <div class="card fade">
+          <h3>🧠 Youth Mental Health</h3>
+          <p>1 in 7 Australian kids experience a mental health condition. Most conditions emerge before age 25 — making early community-level support genuinely important.
+          <br><small style="color:#aaa;font-style:italic;">Statistically, look to your left and right. One of you is struggling. Probably you.</small></p>
+        </div>
+        <div class="card fade">
+          <h3>🚧 Access Barriers</h3>
+          <p>Cost, transport, cultural unfamiliarity, and the need for referrals all reduce uptake of existing health services — especially in Wyndham's diverse communities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- WHY WYNDHAM -->
-<section id="why">
-  <div class="two-col">
-    <div>
-      <div class="tag">The Problem</div>
-      <h2>Why Does Wyndham <span class="u">Need This?</span></h2>
-      <p class="sub">
-        Wyndham has over 50 documented community health programs. But nearly all of them
-        are built for adults, seniors, or families. There's almost nothing for young people
-        outside of a school or clinic — and that gap has been officially documented in Wyndham's own reports.
-      </p>
-      <div class="quote-box fade">
-        <p>"There is less visibility of youth-specific mental health initiatives outside of school settings. Expanding peer support for young people could address this gap."</p>
-        <cite>— Wyndham Community Health & Wellbeing Report, 2024–2026</cite>
-      </div>
-    </div>
-    <div class="why-cards">
-      <div class="why-card fade">
-        <div class="why-card-top">
-          <div class="why-num">1 in 7</div>
-          <div class="why-title">Australian kids have a mental health condition</div>
+<section style="background:#16213e;">
+  <div class="container">
+    <h2>Why <span>Wyndham</span> Specifically?</h2>
+    <p class="section-sub">Wyndham has over 50 community health programs. The problem isn't that there are none — it's that almost none of them are for young people.</p>
+    <div class="grid-2">
+      <div>
+        <div class="card fade">
+          <h3>1 in 7 — Australian kids have a mental health condition</h3>
+          <p>Most services are too expensive or hard to get to. The Rover comes to them — free, no appointment needed.</p>
         </div>
-        <div class="why-text">Most services are too expensive or hard to get to. The Rover comes to them — free, no appointment needed.</div>
-      </div>
-      <div class="why-card fade">
-        <div class="why-card-top">
-          <div class="why-num">40%+</div>
-          <div class="why-title">Of Wyndham residents come from diverse cultural backgrounds</div>
-        </div>
-        <div class="why-text">Culturally inclusive by design. Every young person is welcome, no matter where they're from. 🌏</div>
-      </div>
-      <div class="why-card fade">
-        <div class="why-card-top">
-          <div class="why-num">75%</div>
-          <div class="why-title">Of mental health conditions emerge before age 25</div>
-        </div>
-        <div class="why-text">Early intervention is consistently the most effective approach — and the least costly for health systems in the long run.</div>
-      </div>
-      <div class="why-card fade">
-        <div class="why-card-top">
-          <div class="why-num">$0</div>
-          <div class="why-title">Cost to every participant</div>
-        </div>
-        <div class="why-text">Wyndham's Municipal Health Plan identifies cost as a key driver of health inequity. The Rover removes that barrier entirely.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT'S DIFFERENT -->
-<section id="different">
-  <div class="tag">The Difference</div>
-  <h2>Not a PE Class. Not a Clinic. <span class="u">Something New.</span></h2>
-  <p class="sub">Most health options for young people have real limitations. WynHealth Rover was built specifically around those gaps.</p>
-
-  <table class="compare-table fade">
-    <thead>
-      <tr>
-        <th>What it covers</th>
-        <th>School PE</th>
-        <th>Sports Club</th>
-        <th>Clinic / GP</th>
-        <th class="hl">WynHealth Rover</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="row-label">Physical activity</td>
-        <td><span class="y">✓</span> Some</td>
-        <td><span class="y">✓</span> Yes</td>
-        <td><span class="n">✗</span> Rarely</td>
-        <td class="rover"><span class="y">✓</span> Every session</td>
-      </tr>
-      <tr>
-        <td class="row-label">Nutrition education</td>
-        <td><span class="n">✗</span> Rarely</td>
-        <td><span class="n">✗</span> No</td>
-        <td><span class="y">✓</span> Sometimes</td>
-        <td class="rover"><span class="y">✓</span> Every session</td>
-      </tr>
-      <tr>
-        <td class="row-label">Mental health skills</td>
-        <td><span class="n">✗</span> Not usually</td>
-        <td><span class="n">✗</span> No</td>
-        <td><span class="y">✓</span> If referred</td>
-        <td class="rover"><span class="y">✓</span> Every session</td>
-      </tr>
-      <tr>
-        <td class="row-label">Harm prevention</td>
-        <td><span class="n">✗</span> Rarely</td>
-        <td><span class="n">✗</span> No</td>
-        <td><span class="y">✓</span> Sometimes</td>
-        <td class="rover"><span class="y">✓</span> Covered</td>
-      </tr>
-      <tr>
-        <td class="row-label">Free to access</td>
-        <td><span class="y">✓</span> Yes</td>
-        <td><span class="n">✗</span> Fees apply</td>
-        <td><span class="n">✗</span> Often not</td>
-        <td class="rover"><span class="y">✓</span> Always</td>
-      </tr>
-      <tr>
-        <td class="row-label">Comes to you</td>
-        <td><span class="n">✗</span> Fixed location</td>
-        <td><span class="n">✗</span> Fixed venue</td>
-        <td><span class="n">✗</span> Fixed location</td>
-        <td class="rover"><span class="y">✓</span> Mobile</td>
-      </tr>
-      <tr>
-        <td class="row-label">No referral needed</td>
-        <td><span class="y">✓</span> Yes</td>
-        <td><span class="y">✓</span> Yes</td>
-        <td><span class="n">✗</span> Usually required</td>
-        <td class="rover"><span class="y">✓</span> Walk up, join in</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- MEET THE ROVER -->
-<section id="rover">
-  <div class="tag">The Mobile Unit</div>
-  <h2>Meet the <span class="u">Rover</span> 🚐</h2>
-  <p class="sub">Not a building. Not a clinic. The Rover is a fully-equipped mobile health unit that travels around Wyndham — schools, parks, community centres, local events.</p>
-  <div class="rover-layout">
-    <div class="rover-visual fade">
-      <span class="big">🚐</span>
-      <div class="mini-tag">The Mobile Unit</div>
-      <strong>WynHealth Rover</strong>
-      <div class="rover-tags">
-        <span>📍 Travels to you</span>
-        <span>🎒 Fully equipped</span>
-        <span>🌏 CALD-inclusive</span>
-        <span>💸 100% free</span>
-        <span>📅 35 min sessions</span>
-      </div>
-    </div>
-    <div class="rover-features">
-      <div class="rover-feature fade">
-        <div class="icon">🏫</div>
-        <div>
-          <strong>Goes to Schools</strong>
-          <p>Visits during lunch, recess, or wellbeing periods. No class disruption, no booking fee.</p>
+        <div class="card fade">
+          <h3>40%+ — Wyndham residents from diverse backgrounds</h3>
+          <p>Culturally accessible by design. No cultural knowledge assumed, every young person welcome. 🌏</p>
         </div>
       </div>
-      <div class="rover-feature fade">
-        <div class="icon">🌳</div>
-        <div>
-          <strong>Shows Up at Community Spaces</strong>
-          <p>Parks, ovals, community centres — wherever young people already spend time in Wyndham.</p>
+      <div>
+        <div class="card fade">
+          <h3>75% — Mental health conditions emerge before age 25</h3>
+          <p>Getting support young makes a real difference. Waiting until things are bad is not a strategy.</p>
         </div>
-      </div>
-      <div class="rover-feature fade">
-        <div class="icon">🎒</div>
-        <div>
-          <strong>Carries Everything It Needs</strong>
-          <p>Resistance bands, balance pads, agility ladders, nutrition kits, habit tracker cards. No setup required.</p>
-        </div>
-      </div>
-      <div class="rover-feature fade">
-        <div class="icon">🤝</div>
-        <div>
-          <strong>Works Alongside Existing Organisations</strong>
-          <p>Partners with IPC Health, Iramoo Community Centre, the Heart Foundation, and others across Wyndham — complementing what already exists, not replacing it.</p>
+        <div class="card fade">
+          <h3>$0 — Cost to every participant</h3>
+          <p>Wyndham's own health research calls out cost as a reason young people don't access services. The Rover costs nothing. Not a reduced rate — nothing.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOUR PILLARS -->
-<section id="program">
-  <div class="tag">What We Deliver</div>
-  <h2>The Four <span class="u">Pillars</span> 💪</h2>
-  <p class="sub">Every Rover session covers all four of these. Not one, not two — all four in 35 minutes. That's the whole point.</p>
-  <div class="pillars-grid">
-    <div class="pillar-card fade">
-      <span class="emoji">⚡</span>
-      <h3>Movement Boosters</h3>
-      <p>Short, sharp bursts to raise the heart rate and build strength. No sports background needed — everyone joins from the start.</p>
-      <ul>
-        <li>5-min energy bursts (squat → jump sequences)</li>
-        <li>Mini circuits with resistance bands</li>
-        <li>Balance pads and agility ladders</li>
-        <li>Outdoor games — reaction tag, relays</li>
-        <li>Weekly Movement Streak Cards</li>
-      </ul>
+<!-- COMPARISON TABLE -->
+<section>
+  <div class="container">
+    <h2>How This Differs From <span>Existing Options</span></h2>
+    <p class="section-sub">Every existing option has a gap. This table shows where those gaps are — and why the Rover fills them.</p>
+    <div style="overflow-x:auto;">
+      <table class="compare-table fade">
+        <thead>
+          <tr>
+            <th>What it covers</th>
+            <th>School PE</th>
+            <th>Sports Club</th>
+            <th>Clinic / GP</th>
+            <th class="hl">WynHealth Rover</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">Physical activity</td>
+            <td><span class="y">✓</span> Some</td><td><span class="y">✓</span> Yes</td><td><span class="n">✗</span> Rarely</td>
+            <td class="rover"><span class="y">✓</span> Every session</td>
+          </tr>
+          <tr>
+            <td class="row-label">Nutrition education</td>
+            <td><span class="n">✗</span> Rarely</td><td><span class="n">✗</span> No</td><td><span class="y">✓</span> Sometimes</td>
+            <td class="rover"><span class="y">✓</span> Every session</td>
+          </tr>
+          <tr>
+            <td class="row-label">Mental health skills</td>
+            <td><span class="n">✗</span> Not usually</td><td><span class="n">✗</span> No</td><td><span class="y">✓</span> If referred</td>
+            <td class="rover"><span class="y">✓</span> Every session</td>
+          </tr>
+          <tr>
+            <td class="row-label">Harm prevention</td>
+            <td><span class="n">✗</span> Rarely</td><td><span class="n">✗</span> No</td><td><span class="y">✓</span> Sometimes</td>
+            <td class="rover"><span class="y">✓</span> Covered</td>
+          </tr>
+          <tr>
+            <td class="row-label">Free to access</td>
+            <td><span class="y">✓</span> Yes</td><td><span class="n">✗</span> Fees apply</td><td><span class="n">✗</span> Often not</td>
+            <td class="rover"><span class="y">✓</span> Always</td>
+          </tr>
+          <tr>
+            <td class="row-label">Comes to you</td>
+            <td><span class="n">✗</span> Fixed location</td><td><span class="n">✗</span> Fixed venue</td><td><span class="n">✗</span> Fixed location</td>
+            <td class="rover"><span class="y">✓</span> Mobile</td>
+          </tr>
+          <tr>
+            <td class="row-label">No referral needed</td>
+            <td><span class="y">✓</span> Yes</td><td><span class="y">✓</span> Yes</td><td><span class="n">✗</span> Usually required</td>
+            <td class="rover"><span class="y">✓</span> Walk up, join in</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="pillar-card fade">
-      <span class="emoji">🥦</span>
-      <h3>Nutrition Skills</h3>
-      <p>Hands-on food literacy activities. Actual skills they can use at the supermarket or in the kitchen — not just "eat your vegetables."</p>
-      <ul>
-        <li>Build-a-balanced-plate activity</li>
-        <li>"Sugar detective" — spot hidden sugars in everyday foods</li>
-        <li>Smoothie building (high fibre, low sugar)</li>
-        <li>Nutrition label-reading races</li>
-        <li>Healthy lunchbox makeovers</li>
-      </ul>
-    </div>
-    <div class="pillar-card fade">
-      <span class="emoji">🧠</span>
-      <h3>Behaviour Change Lessons</h3>
-      <p>Ten-minute micro-lessons on the things that actually shape teen health — kept short and specific so they stick.</p>
-      <ul>
-        <li>Sleep routines and why they affect focus</li>
-        <li>Screen time, dopamine, and how to manage both</li>
-        <li>Breathing techniques for stress</li>
-        <li>Vaping and alcohol harm prevention</li>
-        <li>Healthy relationships and setting boundaries</li>
-      </ul>
-    </div>
-    <div class="pillar-card fade">
-      <span class="emoji">🌟</span>
-      <h3>Youth Leadership Pathway</h3>
-      <p>Teens who complete the program can train to run sessions themselves — turning participants into leaders and extending the Rover's reach through peer networks.</p>
-      <ul>
-        <li>Movement leaders (run warm-ups)</li>
-        <li>Nutrition ambassadors</li>
-        <li>Peer wellbeing mentors</li>
-        <li>Certificate of participation</li>
-        <li>Priority access to future Rover events</li>
-      </ul>
-    </div>
-  </div>
 
-  <div class="takeaway-bar fade">
-    <div class="takeaway-item">
-      <div class="t-icon">📤</div>
-      <p><strong>What participants leave with</strong>A Streak Card, a QR habit tracker, and at least one practical skill they didn't have before.</p>
-    </div>
-    <div class="takeaway-item">
-      <div class="t-icon">🔁</div>
-      <p><strong>Why it's structured this way</strong>Heart rate rises twice — once to open, once to close. The brain-based learning sits in between. That order is deliberate.</p>
-    </div>
-    <div class="takeaway-item">
-      <div class="t-icon">📐</div>
-      <p><strong>Aligned with health frameworks</strong>Covers all 6 modifiable health behaviours from current youth health research and Wyndham's Municipal Health Plan.</p>
+    <div style="margin-top:30px;text-align:center;">
+      <p style="color:#888;font-size:0.9rem;margin-bottom:12px;">Strongly disagree with any of the above?</p>
+      <button class="btn btn-outline disagree-btn" style="font-size:0.85rem;">Click here if you disagree with this program</button>
     </div>
   </div>
 </section>
 
-<!-- SESSION FLOW -->
-<section id="session">
-  <div class="tag">Session Breakdown</div>
-  <h2>What Happens in <span class="u">35 Minutes?</span></h2>
-  <p class="sub">Same structure every time. Heart rate up twice, nutrition skill taught, behaviour change covered. In that order, every visit.</p>
-  <div class="flow-steps">
-    <div class="flow-item fade">
-      <div class="flow-left"><div class="flow-circle">1</div><div class="flow-line"></div></div>
-      <div class="flow-content">
-        <div class="flow-top"><span class="flow-time">5 min</span><strong>⚡ Movement Burst</strong></div>
-        <p>Squat-reach-jump sequences, fast laps, shadow boxing. Gets everyone activated and ready.</p>
-        <div class="flow-why">Why: <span>raises heart rate, improves insulin sensitivity, sets the energy for the session</span></div>
-      </div>
-    </div>
-    <div class="flow-item fade">
-      <div class="flow-left"><div class="flow-circle">2</div><div class="flow-line"></div></div>
-      <div class="flow-content">
-        <div class="flow-top"><span class="flow-time">10 min</span><strong>🥦 Nutrition Skill</strong></div>
-        <p>Hands-on food activity — label reading, sugar detective challenge, or balanced plate build. Changes each visit.</p>
-        <div class="flow-why">Why: <span>active learning sticks better than being told what to eat</span></div>
-      </div>
-    </div>
-    <div class="flow-item fade">
-      <div class="flow-left"><div class="flow-circle">3</div><div class="flow-line"></div></div>
-      <div class="flow-content">
-        <div class="flow-top"><span class="flow-time">10 min</span><strong>🧠 Behaviour Change</strong></div>
-        <p>One focused lesson on sleep, screens, stress, vaping, or relationships. One topic at a time, on purpose.</p>
-        <div class="flow-why">Why: <span>single-topic lessons outperform multi-topic ones for recall</span></div>
-      </div>
-    </div>
-    <div class="flow-item fade">
-      <div class="flow-left"><div class="flow-circle">4</div><div class="flow-line"></div></div>
-      <div class="flow-content">
-        <div class="flow-top"><span class="flow-time">5 min</span><strong>🎮 Movement Game</strong></div>
-        <p>Reaction tag, team relays, mirror-me. Second heart-rate spike. Ends high, not flat.</p>
-        <div class="flow-why">Why: <span>finishing on a positive experience increases the chance of coming back</span></div>
-      </div>
-    </div>
-    <div class="flow-item fade">
-      <div class="flow-left"><div class="flow-circle">5</div><div class="flow-line"></div></div>
-      <div class="flow-content">
-        <div class="flow-top"><span class="flow-time">5 min</span><strong>📋 Habit Challenge <em style="font-size:0.75rem;color:#444;">(optional)</em></strong></div>
-        <p>Streak Card or QR-code habit tracker to continue the change at home. One session isn't enough — this bridges the gap.</p>
-        <div class="flow-why">Why: <span>habit formation requires repetition beyond a single session</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+<footer id="main-footer"></footer>
 
-<!-- OUTCOMES -->
-<section id="outcomes">
-  <div class="tag">Why It Works</div>
-  <h2>Health Outcomes <span class="u">We Target</span> 🎯</h2>
-  <p class="sub">Six modifiable health behaviours, one session. Research links all of these to long-term wellbeing in young people.</p>
-  <div class="outcomes-grid">
-    <div class="outcome-card fade">
-      <span class="icon">🏃</span>
-      <h4>Physical Health</h4>
-      <ul>
-        <li>Increased daily physical activity</li>
-        <li>Better cardiovascular fitness</li>
-        <li>Improved metabolic health</li>
-        <li>Less sedentary time</li>
-        <li>Stronger balance and coordination</li>
-      </ul>
-    </div>
-    <div class="outcome-card fade">
-      <span class="icon">🥗</span>
-      <h4>Nutrition</h4>
-      <ul>
-        <li>Higher fruit and vegetable intake</li>
-        <li>Lower sugar consumption</li>
-        <li>Better hydration habits</li>
-        <li>Smarter food decision-making</li>
-        <li>Practical cooking and label-reading skills</li>
-      </ul>
-    </div>
-    <div class="outcome-card fade">
-      <span class="icon">💬</span>
-      <h4>Mental Health</h4>
-      <ul>
-        <li>Reduced stress and anxiety</li>
-        <li>Better sleep quality and consistency</li>
-        <li>Improved emotional regulation</li>
-        <li>Stronger decision-making under pressure</li>
-        <li>Greater mental health literacy</li>
-      </ul>
-    </div>
-    <div class="outcome-card fade">
-      <span class="icon">👥</span>
-      <h4>Social Health</h4>
-      <ul>
-        <li>Stronger peer connections</li>
-        <li>Greater community belonging</li>
-        <li>More positive behaviour patterns</li>
-        <li>Safer relationship skills</li>
-      </ul>
-    </div>
-    <div class="outcome-card fade">
-      <span class="icon">🛑</span>
-      <h4>Harm Prevention</h4>
-      <ul>
-        <li>Reduced vaping experimentation</li>
-        <li>Lower-risk alcohol behaviour</li>
-        <li>Healthier screen-time habits</li>
-        <li>Better awareness of risky choices</li>
-      </ul>
-    </div>
-    <div class="outcome-card fade">
-      <span class="icon">📍</span>
-      <h4>Local Impact</h4>
-      <ul>
-        <li>Directly addresses Wyndham's documented youth health gap</li>
-        <li>Aligned with the Municipal Health Plan 2021–25</li>
-        <li>Reaches areas underserved by current programs</li>
-        <li>Inclusive for CALD communities across Wyndham</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- FOUNDER -->
-<section id="founder">
-  <div class="tag">About</div>
-  <h2>The Person <span class="u">Behind It</span> 👋</h2>
-  <div class="founder-box fade">
-    <div class="founder-avatar">A</div>
-    <div>
-      <h3>Aaryav</h3>
-      <div class="founder-role">Founder & Program Designer · WynHealth Rover</div>
-      <p>
-        I built WynHealth Rover after looking at Wyndham's community health programs and noticing a clear pattern —
-        programs for seniors, adults, carers, and families, but almost nothing for young people that wasn't
-        attached to a school or a sports club.
-        <br><br>
-        I used Wyndham's own health data, the Municipal Public Health and Wellbeing Plan (2021–2025),
-        and evidence from local organisations like IPC Health and the Wyndham Health Foundation
-        to design something around what was genuinely missing.
-        The result is a program that hits all six modifiable health behaviours in a single 35-minute session,
-        delivered wherever young people already are.
-        <br><br>
-        The Rover is mobile, free, and designed for Wyndham specifically — not a generic health program dropped into a new postcode.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- PARTNERS -->
-<section id="partners">
-  <div class="tag">Community Alignment</div>
-  <h2>Aligned With <span class="u">Wyndham</span> 🤝</h2>
-  <p class="sub">Works alongside existing Wyndham health infrastructure — not around it.</p>
-  <div class="partners-wrap">
-    <div class="partner-pill">Wyndham City Council</div>
-    <div class="partner-pill">IPC Health</div>
-    <div class="partner-pill">Wyndham Health Foundation</div>
-    <div class="partner-pill">Municipal Health Plan 2021–25</div>
-    <div class="partner-pill">Heart Foundation Walking Groups</div>
-    <div class="partner-pill">Wyndham CEC</div>
-    <div class="partner-pill">Iramoo Community Centre</div>
-    <div class="partner-pill">Truganina Community Centre</div>
-    <div class="partner-pill">Manor Lakes Community Learning Centre</div>
-    <div class="partner-pill">Point Cook Community Learning Centre</div>
-    <div class="partner-pill">Evolution Creative Arts Therapies</div>
-    <div class="partner-pill">Wyndham Libraries</div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Wyn<span>Health</span> Rover</div>
-  <p>Designed by Aaryav · Wyndham, Victoria · 2025</p>
-  <p>A community-based youth health initiative 🚐</p>
-</footer>
-
-<script>
-  // Fade in on scroll
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
-
-  // Animated counters
-  function countUp(el) {
-    const target = parseInt(el.dataset.target);
-    const dur = 1600;
-    const start = performance.now();
-    function step(now) {
-      const p = Math.min((now - start) / dur, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      const val = Math.round(ease * target);
-      el.textContent = target === 100 ? val + '%' : val.toLocaleString();
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  const statsObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.querySelectorAll('[data-target]').forEach(countUp);
-        statsObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  const stats = document.getElementById('stats');
-  if (stats) statsObs.observe(stats);
-</script>
+<script>window.currentPage = 'index.html';</script>
+<script src="shared.js"></script>
 </body>
 </html>
