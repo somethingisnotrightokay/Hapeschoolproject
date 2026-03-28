@@ -1,236 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Program – WynHealth Rover</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<nav id="main-nav"></nav>
-<div id="clown-overlay"></div>
-<section style="background:#16213e;padding-top:60px;">
-  <div class="container">
-    <h2>The <span>Session Flow</span></h2>
-    <div class="session-flow">
-      <div class="flow-step">
-        <div class="step-number">1</div>
-        <div class="step-icon">⚡</div>
-        <div class="step-content">
-          <h3>Movement Burst</h3>
-          <p>Squat-reach-jump sequences, fast laps, shadow boxing. Gets everyone activated and ready.</p>
-          <p class="step-time">5 min</p>
-          <p class="step-why">Why: exercise before learning = better focus. Also it's more fun than sitting down immediately</p>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-number">2</div>
-        <div class="step-icon">🥦</div>
-        <div class="step-content">
-          <h3>Nutrition Skill</h3>
-          <p>Hands-on food activity — label reading (3 packages max), sugar detective challenge, or balanced plate build. Rotates each visit.</p>
-          <p class="step-time">5 min</p>
-          <p class="step-why">Why: doing something is more memorable than being told about it. Nobody remembers a slide about vegetables</p>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-number">3</div>
-        <div class="step-icon">🧠</div>
-        <div class="step-content">
-          <h3>Behaviour Change</h3>
-          <p>One focused lesson on sleep, screens, stress, vaping, or relationships. Single-topic by design.</p>
-          <p class="step-time">5 min</p>
-          <p class="step-why">Why: trying to teach five things at once means nobody remembers any of them</p>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-number">4</div>
-        <div class="step-icon">🎮</div>
-        <div class="step-content">
-          <h3>Movement Game</h3>
-          <p>Reaction tag, team relays, mirror-me. Second heart-rate spike. Ends high, not flat.</p>
-          <p class="step-time">5 min</p>
-          <p class="step-why">Why: people come back to things they enjoyed. Ending on a game > ending on a worksheet</p>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-number">5</div>
-        <div class="step-icon">📋</div>
-        <div class="step-content">
-          <h3>Habit Challenge (optional, but your mum will ask about it)</h3>
-          <p>Streak Card or QR-code habit tracker to continue the change at home.</p>
-          <p class="step-time">0-5 min (optional)</p>
-          <p class="step-why">Why: one session doesn't build a habit. This keeps it going at home without being annoying about it</p>
-        </div>
-      </div>
-    </div>
-    <p class="session-total" style="text-align:center; margin-top:24px; font-weight:600; color:#ff4500; font-size:1.1rem;">
-      Total designed session time: 15-20 minutes
-    </p>
-  </div>
-</section>
-<section style="background:#0f172a;">
-  <div class="container">
-    <h2>How the Rover Works <span>🚐</span></h2>
-    <p>It's a van. A fully-equipped mobile health van that shows up at schools, parks, community centres, and local events across Wyndham. No travel needed, no appointment, no fee.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:24px;">
-      <div>
-        <h3>🚐 The Mobile Unit</h3>
-        <p>WynHealth Rover<br>📍 Travels to you 🎒 Fully equipped 🌏 CALD-inclusive 💸 100% free 📅 35 min sessions</p>
-        <p style="font-size:0.9rem;opacity:0.8;margin-top:8px;">(click the van 10 times. go on.)</p>
-      </div>
-      <div>
-        <h3>🏫 School Visits</h3>
-        <p>Visits during lunch, recess, or wellbeing periods. No class disruption, no booking fee required from schools.</p>
-      </div>
-      <div>
-        <h3>🌳 Community Spaces</h3>
-        <p>Parks, ovals, community centres — wherever young people in Wyndham already spend time.</p>
-      </div>
-      <div>
-        <h3>🎒 Self-Contained Equipment</h3>
-        <p>Resistance bands, balance pads, agility ladders, nutrition activity kits, habit tracker cards. No external setup required.</p>
-      </div>
-      <div>
-        <h3>🤝 Fits Into What's Already There</h3>
-        <p>Not trying to replace IPC Health or Iramoo Community Centre — just filling the gap they don't cover.</p>
-      </div>
-    </div>
-    <h2>The Four Pillars <span>💪</span></h2>
-    <p>Every Rover session covers all four of these. Not one, not two — all four in 35 minutes. A regular PE class or a one-off health talk won't do that.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:24px;">
-      <div class="fade">
-        <h3>⚡ Movement Boosters</h3>
-        <p>Short bursts of physical activity to raise heart rate and build strength. No sports background needed — accessible for all fitness levels.</p>
-        <ul style="margin-top:12px;line-height:1.6;">
-          <li>→ 5-min energy bursts (squat → jump sequences)</li>
-          <li>→ Mini circuits with resistance bands</li>
-          <li>→ Balance pads and agility ladders</li>
-          <li>→ Outdoor games — reaction tag, relays</li>
-          <li>→ Weekly Movement Streak Cards</li>
-        </ul>
-      </div>
-      <div class="fade">
-        <h3>🥦 Nutrition Skills</h3>
-        <p>Hands-on activities using real food and packaging. Reading labels, spotting hidden sugars, figuring out what a balanced meal actually looks like. Not another slide about the food pyramid.</p>
-        <ul style="margin-top:12px;line-height:1.6;">
-          <li>→ Build-a-balanced-plate activity</li>
-          <li>→ "Sugar detective" — identify hidden sugars</li>
-          <li>→ Smoothie building (high fibre, low sugar)</li>
-          <li>→ Nutrition label-reading races</li>
-          <li>→ Healthy lunchbox makeovers</li>
-        </ul>
-      </div>
-      <div class="fade">
-        <h3>🧠 Behaviour Change Lessons</h3>
-        <p>Quick, focused lessons on the stuff that actually affects how teens feel day-to-day. Sleep, screens, stress, vaping, relationships. One topic per session so it doesn't blur into noise.</p>
-        <ul style="margin-top:12px;line-height:1.6;">
-          <li>→ Sleep routines and how they affect focus and mood</li>
-          <li>→ Screen time, dopamine, and how to manage both</li>
-          <li>→ Breathing techniques for stress</li>
-          <li>→ Vaping and alcohol harm reduction</li>
-          <li>→ Healthy relationships and boundaries</li>
-        </ul>
-      </div>
-      <div class="fade">
-        <h3>🌟 Youth Leadership Pathway</h3>
-        <p>Once you've done enough sessions, you can start helping run them. Teens listen to other teens more than they listen to adults. Statistically proven. Probably.</p>
-        <ul style="margin-top:12px;line-height:1.6;">
-          <li>→ Movement leaders (run warm-ups)</li>
-          <li>→ Nutrition ambassadors</li>
-          <li>→ Peer wellbeing mentors</li>
-          <li>→ Certificate of participation — yes it counts as a resume line</li>
-          <li>→ Priority access to future Rover events</li>
-        </ul>
-      </div>
-    </div>
-    <h2>📤 What you leave with</h2>
-    <p>A Streak Card, a QR habit tracker, and at least one thing you didn't know before.</p>
-    <h2>🔁 Why it's structured this way</h2>
-    <p>Heart rate goes up twice — once to open, once to close. The learning sits in the middle. That order is deliberate.</p>
-    <h2>📐 Covers everything on the rubric <span>😅</span></h2>
-    <p>Hits all 6 health areas from the HAPE curriculum and Wyndham's own health plan. In one 35-minute session.</p>
-    <h2>A Session in 35 Minutes</h2>
-    <p>Same structure every time. Heart rate up twice, food skill done, one health topic covered. That's the whole 35 minutes.</p>
-    <ol style="margin-top:16px;padding-left:24px;line-height:1.8;">
-      <li>
-        <strong>5 min⚡ Movement Burst</strong><br>
-        Squat-reach-jump sequences, fast laps, shadow boxing. Gets everyone activated and ready.<br>
-        <em>Why: exercise before learning = better focus. Also it's more fun than sitting down immediately</em>
-      </li>
-      <li>
-        <strong>5 min🥦 Nutrition Skill</strong><br>
-        Hands-on food activity — label reading (3 packages max), sugar detective challenge, or balanced plate build. Rotates each visit.<br>
-        <em>Why: doing something is more memorable than being told about it. Nobody remembers a slide about vegetables</em>
-      </li>
-      <li>
-        <strong>5 min🧠 Behaviour Change</strong><br>
-        One focused lesson on sleep, screens, stress, vaping, or relationships. Single-topic by design.<br>
-        <em>Why: trying to teach five things at once means nobody remembers any of them</em>
-      </li>
-      <li>
-        <strong>5 min🎮 Movement Game</strong><br>
-        Reaction tag, team relays, mirror-me. Second heart-rate spike. Ends high, not flat.<br>
-        <em>Why: people come back to things they enjoyed. Ending on a game > ending on a worksheet</em>
-      </li>
-      <li>
-        <strong>5 min📋 Habit Challenge (optional, but your mum will ask about it)</strong><br>
-        Streak Card or QR-code habit tracker to continue the change at home.<br>
-        <em>Why: one session doesn't build a habit. This keeps it going at home without being annoying about it</em>
-      </li>
-    </ol>
-    <h2>Health Areas We Cover <span>🎯</span></h2>
-    <p>Each session covers all six areas. That's what makes it different from a lunchtime PE game or a one-off health talk.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:24px;">
-      <div class="fade">
-        <h3>🏃 Physical Health</h3>
-        <p>— More daily physical activity<br>— Better cardiovascular fitness<br>— Improved metabolic health<br>— Less sedentary time<br>— Stronger balance + coordination</p>
-      </div>
-      <div class="fade">
-        <h3>🥗 Nutrition</h3>
-        <p>— More fruit and veg<br>— Less added sugar<br>— Better hydration habits<br>— Smarter food choices<br>— Practical cooking + label skills</p>
-      </div>
-      <div class="fade">
-        <h3>💬 Mental Health</h3>
-        <p>— Reduced stress and anxiety<br>— Better sleep quality<br>— Improved emotional regulation<br>— Stronger decision-making<br>— Greater mental health literacy</p>
-      </div>
-      <div class="fade">
-        <h3>👥 Social Health</h3>
-        <p>— Stronger peer connections<br>— Greater community belonging<br>— More positive behaviour patterns<br>— Safer relationship skills</p>
-      </div>
-      <div class="fade">
-        <h3>🛑 Harm Prevention</h3>
-        <p>— Reduced vaping experimentation<br>— Lower-risk alcohol behaviour<br>— Healthier screen-time habits<br>— Better awareness of risky choices</p>
-      </div>
-      <div class="fade">
-        <h3>📍 Local Impact</h3>
-        <p>— Fills Wyndham's youth health gap<br>— Aligned with Municipal Health Plan<br>— Reaches underserved areas<br>— Inclusive for CALD communities</p>
-      </div>
-    </div>
-    <h2>Organisations Referenced</h2>
-    <p>The program design draws on data and frameworks from these existing Wyndham health organisations.</p>
-    <p style="margin-top:12px;line-height:1.6;">
-      Wyndham City Council<br>
-      IPC Health<br>
-      Wyndham Health Foundation<br>
-      Municipal Health Plan 2021–25<br>
-      Heart Foundation Walking Groups<br>
-      Wyndham CEC<br>
-      Iramoo Community Centre<br>
-      Truganina Community Centre<br>
-      Manor Lakes Community Learning Centre<br>
-      Point Cook Community Learning Centre<br>
-      Evolution Creative Arts Therapies<br>
-      Wyndham Libraries<br>
-      WynHealth Rover
-    </p>
-    <p style="margin-top:24px;font-size:0.9rem;opacity:0.8;">
-      Created by Aaryav · Wyndham, VIC · 2025 · Year 8 HAPE Assignment
-    </p>
-  </div>
-</section>
-<footer id="main-footer"></footer>
-<script>window.currentPage = 'program.html';</script>
-<script src="shared.js"></script>
-</body>
-</html>
+/* Add these styles to your existing style.css */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 60px 0;
+}
+
+section:nth-of-type(even) {
+  background: #0f172a;
+  color: #fff;
+}
+
+section:nth-of-type(odd) {
+  background: #16213e;
+  color: #fff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+h2 span {
+  color: #ff4500;
+}
+
+.session-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.flow-step {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.step-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff4500;
+  margin-bottom: 10px;
+}
+
+.step-icon {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.step-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+}
+
+.step-time {
+  font-weight: bold;
+  color: #ff4500;
+  margin: 10px 0;
+}
+
+.step-why {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.session-total {
+  margin-top: 30px !important;
+}
+
+.fade {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.fade:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.fade h3 {
+  margin-top: 0;
+  color: #ff4500;
+}
+
+.fade ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.fade ul li::before {
+  content: "→ ";
+  color: #ff4500;
+  font-weight: bold;
+}
