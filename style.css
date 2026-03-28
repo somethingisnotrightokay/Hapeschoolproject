@@ -370,3 +370,61 @@ footer p { font-size: 0.76rem; color: #aaa; }
   .barrier-right { border-left: none; border-top: 2px solid rgba(255,69,0,0.25); }
   footer { flex-direction: column; text-align: center; }
 }
+
+/* SESSION FLOW (program.html only) */
+.session-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.flow-step {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 20px;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background 0.2s;
+}
+.flow-step:hover { background: rgba(255,255,255,0.1); }
+.step-number {
+  background: #ff4500;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.step-icon { font-size: 1.8rem; }
+.flow-step h3 { font-size: 1rem; color: white; margin: 0; }
+.flow-step p { color: #ccc; font-size: 0.88rem; margin: 0; }
+.step-time { font-size: 0.82rem; color: #ffb86c; font-weight: 600; }
+.step-why { font-size: 0.8rem; color: #aaa; font-style: italic; }
+.session-total {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 600;
+  color: #ff4500;
+  font-size: 1rem;
+}
+
+/* PROGRAM PAGE - inline list items */
+.prog-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.prog-list li { color: #888; font-size: 0.86rem; }
+.prog-list li::before { content: "→ "; color: #ff4500; }
